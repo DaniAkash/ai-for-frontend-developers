@@ -1,6 +1,7 @@
 import { useChat } from "ai/react";
 import { useEffect, useRef } from "react";
 import { cn } from "../utils/cn";
+import WeatherWidget from "./weather-widget";
 
 export const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -55,27 +56,28 @@ export const Chat = () => {
                       const { toolName, toolCallId, state, args } =
                         toolInvocation;
 
-                      let result;
+                      if (toolName === "getWeather") {
+                        if (state === "result") {
+                          const weatherData = toolInvocation.result;
+                          return <WeatherWidget weatherData={weatherData} />;
+                        }
 
-                      if (state === "result") {
-                        result = toolInvocation.result;
+                        return (
+                          <pre>
+                            {JSON.stringify(
+                              {
+                                toolName,
+                                toolCallId,
+                                state,
+                                args,
+                              },
+                              null,
+                              2,
+                            )}
+                          </pre>
+                        );
                       }
-
-                      return (
-                        <pre>
-                          {JSON.stringify(
-                            {
-                              toolName,
-                              toolCallId,
-                              state,
-                              args,
-                              result,
-                            },
-                            null,
-                            2,
-                          )}
-                        </pre>
-                      );
+                      return null;
                     })}
                   </div>
                 )}
