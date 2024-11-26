@@ -1,11 +1,6 @@
 import type { APIRoute } from "astro";
 import { createOpenAI } from "@ai-sdk/openai";
-import {
-  convertToCoreMessages,
-  StreamData,
-  streamText,
-  type Message,
-} from "ai";
+import { convertToCoreMessages, streamText, type Message } from "ai";
 import { z } from "zod";
 
 export const POST: APIRoute = async ({ request }) => {
