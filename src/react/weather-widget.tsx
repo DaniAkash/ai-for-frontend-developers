@@ -99,36 +99,36 @@ export default function WeatherWidget({ weatherData }: WeatherWidgetProps) {
       <CardHeader>
         <CardTitle>Weather Forecast</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="w-full max-w-3xl">
         <div className="grid gap-4">
           {/* Current Temperature */}
-          <Card>
+          <Card className="w-full max-w-2xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Current Temperature
               </CardTitle>
-              <Thermometer className="text-muted-foreground h-4 w-4" />
+              <Thermometer className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
                 {current.temperature_2m}°C
               </div>
-              <p className="text-muted-foreground text-xs">
+              <p className="text-xs text-muted-foreground">
                 As of {formatTime(current.time)}
               </p>
             </CardContent>
           </Card>
 
           {/* Hourly Forecast */}
-          <Card>
+          <Card className="w-full max-w-2xl">
             <CardHeader>
               <CardTitle className="text-sm font-medium">
                 24-Hour Forecast
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ScrollArea className="h-[200px]">
-                <div className="flex space-x-4">
+              <ScrollArea>
+                <div className="flex h-[64px] space-x-4">
                   {hourly.time.slice(0, 24).map((time, index) => (
                     <div key={time} className="flex flex-col items-center">
                       <span className="text-sm">{formatTime(time)}</span>
