@@ -1,6 +1,11 @@
 import type { APIRoute } from "astro";
 import { createOpenAI } from "@ai-sdk/openai";
-import { convertToCoreMessages, streamText, type Message } from "ai";
+import {
+  convertToCoreMessages,
+  StreamData,
+  streamText,
+  type Message,
+} from "ai";
 import { z } from "zod";
 
 export const POST: APIRoute = async ({ request }) => {
@@ -17,6 +22,15 @@ export const POST: APIRoute = async ({ request }) => {
 
     const response = streamText({
       model: openai("gpt-4o"),
+      system: `You are a friendly assistant! Keep your responses concise and helpful.
+      
+      CodeBlock is a way to display code to the User. A codeblock will contain the language's name and the actual code. If your answer requires a code to be shown to the user, you can use the createCodeBlock tool. Do not include the code in any other responses outside of the createCodeBlock tool.
+      
+      This is a guide for using the codeblock tool: \`createCodeBlock\` which will lets user see a code block with syntax highlighting
+      
+      When to use the createCodeBlock tool:
+      - When you want to display code to the user
+      - When the answer requires a code to be shown to the user`,
       messages: coreMessages,
       maxSteps: 5,
       tools: {
@@ -33,6 +47,16 @@ export const POST: APIRoute = async ({ request }) => {
 
             const weatherData = await response.json();
             return weatherData;
+          },
+        },
+        createCodeBlock: {
+          description: "Create a code block",
+          parameters: z.object({
+            code: z.string(),
+            language: z.string(),
+          }),
+          execute: async ({ code, language }) => {
+            return { code, language };
           },
         },
       },

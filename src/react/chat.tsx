@@ -2,6 +2,7 @@ import { useChat } from "ai/react";
 import { useEffect, useRef } from "react";
 import { cn } from "../utils/cn";
 import WeatherWidget from "./weather-widget";
+import CodeBlock from "./code-block";
 
 export const Chat = () => {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
@@ -33,7 +34,7 @@ export const Chat = () => {
                 key={m.id}
                 ref={isLastMessage ? messagesEndRef : undefined}
                 className={cn(
-                  "flex flex-col gap-4 whitespace-pre-wrap rounded-xl bg-zinc-50 p-4 shadow-sm xl:gap-2 xl:p-2 dark:bg-black",
+                  "flex flex-col gap-4 whitespace-pre-wrap rounded-xl bg-zinc-50 p-4 shadow-sm dark:bg-black xl:gap-2 xl:p-2",
                   isUser ? "items-end" : "items-start",
                 )}
               >
@@ -56,28 +57,30 @@ export const Chat = () => {
                       const { toolName, toolCallId, state, args } =
                         toolInvocation;
 
-                      if (toolName === "getWeather") {
-                        if (state === "result") {
+                      if (state === "result") {
+                        if (toolName === "getWeather") {
                           const weatherData = toolInvocation.result;
                           return <WeatherWidget weatherData={weatherData} />;
                         }
-
-                        return (
-                          <pre>
-                            {JSON.stringify(
-                              {
-                                toolName,
-                                toolCallId,
-                                state,
-                                args,
-                              },
-                              null,
-                              2,
-                            )}
-                          </pre>
-                        );
+                        if (toolName === "createCodeBlock") {
+                          const { code, language } = toolInvocation.result;
+                          return <CodeBlock code={code} language={language} />;
+                        }
                       }
-                      return null;
+                      return (
+                        <pre className="text-wrap">
+                          {JSON.stringify(
+                            {
+                              toolName,
+                              toolCallId,
+                              state,
+                              args,
+                            },
+                            null,
+                            2,
+                          )}
+                        </pre>
+                      );
                     })}
                   </div>
                 )}
@@ -89,7 +92,7 @@ export const Chat = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex w-full flex-row gap-4 p-4 xl:gap-2 xl:p-2">
             <input
-              className="w-full flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 sm:text-sm dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10"
+              className="w-full flex-auto appearance-none rounded-md border border-zinc-900/10 bg-white px-3 py-[calc(theme(spacing.2)-1px)] shadow-md shadow-zinc-800/5 placeholder:text-zinc-400 focus:border-teal-500 focus:outline-none focus:ring-4 focus:ring-teal-500/10 dark:border-zinc-700 dark:bg-zinc-700/[0.15] dark:text-zinc-200 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/10 sm:text-sm"
               value={input}
               placeholder="Ask something..."
               onChange={handleInputChange}
