@@ -21,7 +21,7 @@ export const Chat = () => {
   }, [messages]);
 
   return (
-    <div className="flex h-screen min-h-96 w-screen overflow-clip bg-white text-zinc-600 shadow-md ring-1 ring-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:ring-zinc-300/20">
+    <div className="flex h-[calc(100vh-64px)] min-h-96 w-screen overflow-clip bg-white text-zinc-600 shadow-md ring-1 ring-zinc-100 dark:bg-zinc-900 dark:text-zinc-400 dark:ring-zinc-300/20">
       <div className="relative flex flex-1 flex-col items-stretch justify-between">
         <div className="flex h-full flex-col space-y-4 overflow-auto p-4 xl:space-y-2 xl:p-2">
           {messages.map((m, mIndex) => {
