@@ -14,9 +14,14 @@ export const NavBar = ({ activeUrl }: { activeUrl: string }) => {
       current: activeUrl === "/",
     },
     {
+      name: "Demo",
+      href: "/demo",
+      current: activeUrl.startsWith("/demo"),
+    },
+    {
       name: "Chat",
       href: "/chat",
-      current: activeUrl === "/chat/",
+      current: activeUrl.startsWith("/chat"),
     },
   ];
 

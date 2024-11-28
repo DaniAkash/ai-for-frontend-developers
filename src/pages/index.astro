@@ -3,5 +3,175 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 ---
 
 <BaseLayout>
-  <h1>Home</h1>
+  <link
+    rel="stylesheet"
+    href="/node_modules/reveal.js/dist/reveal.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    rel="stylesheet"
+    href="/node_modules/reveal.js/dist/theme/black.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <link
+    rel="stylesheet"
+    href="/node_modules/reveal.js/plugin/highlight/monokai.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <div class="reveal !h-[calc(100vh-64px)] !w-screen">
+    <div class="slides">
+      <section data-auto-animate>
+        <p>AI</p>
+        <p>For frontend developers</p>
+      </section>
+      <section data-auto-animate>
+        <p>AI</p>
+      </section>
+      <section data-auto-animate>
+        <p>What is AI?</p>
+        <p class="fragment text-left text-[18px]">
+          Artificial intelligence is a field of science concerned with building
+          computers and machines that can reason, learn, and act in such a way
+          that would normally require human intelligence or that involves data
+          whose scale exceeds what humans can analyze.
+        </p>
+        <small class="fragment w-full text-right text-[14px]"
+          >- <a
+            href="https://cloud.google.com/learn/what-is-artificial-intelligence"
+            target="_blank"
+          >
+            Google Cloud</a
+          ></small
+        >
+      </section>
+      <section>
+        <img src="/images/ai-overview.png" alt="AI Overview" />
+      </section>
+      <section>
+        <p>Where to Learn AI?</p>
+        <ul>
+          <li>
+            <a
+              href="https://www.coursera.org/learn/ai-for-everyone"
+              target="_blank">Coursera - AI for everyone</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://microsoft.github.io/AI-For-Beginners/"
+              target="_blank">Microsoft - AI For Beginners</a
+            >
+          </li>
+          <li>
+            <a href="https://www.deeplearning.ai/courses/" target="_blank"
+              >DeepLearning.AI</a
+            >
+          </li>
+        </ul>
+      </section>
+      <section>But what about frontend developers?</section>
+      <section>
+        <pre
+          class="fragment"><code data-trim data-noescape>{`> npm i ai`}</code></pre>
+        <a
+          class="fragment"
+          target="_blank"
+          href="https://sdk.vercel.ai/docs/introduction">AI SDK by vercel</a
+        >
+      </section>
+      <section>
+        <pre>
+          <code data-trim data-noescape data-line-numbers="1|8-11|4-7|14-18|21-25|27">
+{
+`import { useChat } from "ai/react";
+
+const { 
+  messages, 
+  input, 
+  handleInputChange, 
+  handleSubmit 
+} = useChat({
+  api: "/api/ai",
+  maxSteps: 3,
+});
+
+
+{
+  messages.map((message, index) => (
+    <div key={index}>{message.content}</div>
+  ));
+}
+
+
+<input
+  value={input}
+  placeholder="Ask something..."
+  onChange={handleInputChange}
+/>
+
+<button onClick={handleSubmit}>Submit</button>
+`}
+          </code>
+        </pre>
+      </section>
+      <section>
+        <pre><code data-trim data-noescape data-line-numbers="1-16|4-6|8-13">
+{`import type { APIRoute } from "astro";
+
+export const POST: APIRoute = async ({ request }) => {
+  const json = await request.json();
+
+  const { messages } = json;
+
+  if (messages.length) {
+    return new Response(
+      JSON.stringify({ messages }),
+      { status: 200 }
+    );
+  }
+
+  return new Response(null, { status: 400 });
+};`}</code></pre>
+      </section>
+      <section>
+        <pre><code data-trim data-noescape>{`> npm i @ai-sdk/openai`}</code></pre>
+      </section>
+      <section>
+        <pre><code data-trim data-noescape data-line-numbers="1-16|1-2|3-7|9|11-14|16">
+{`import { createOpenAI } from "@ai-sdk/openai";
+import { convertToCoreMessages, streamText } from "ai";
+
+const openai = createOpenAI({
+  compatibility: "strict",
+  apiKey: import.meta.env.OPENAI_API_KEY,
+});
+
+const coreMessages = convertToCoreMessages(messages);
+
+const response = streamText({
+  model: openai("gpt-4o"),
+  messages: coreMessages,
+});
+
+return response.toDataStreamResponse();
+`}</code></pre>
+      </section>
+    </div>
+  </div>
+  <script>
+    import Reveal from "reveal.js";
+    import Markdown from "reveal.js/plugin/markdown/markdown.esm.js";
+    import Highlight from "reveal.js/plugin/highlight/highlight.esm.js";
+    import Notes from "reveal.js/plugin/notes/notes.esm.js";
+
+    let deck = new Reveal({
+      plugins: [Markdown, Highlight, Notes],
+      embedded: true,
+      hash: true,
+    });
+    deck.initialize();
+  </script>
 </BaseLayout>

@@ -3,7 +3,7 @@ export default {
   darkMode: ["class"],
   content: [
     "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
-    "./node_modules/reveal.js",
+    "./node_modules/reveal.js/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
   ],
   theme: {
     extend: {

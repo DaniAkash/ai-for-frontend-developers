@@ -4,9 +4,9 @@ import { cn } from "../utils/cn";
 import WeatherWidget from "./weather-widget";
 import CodeBlock from "./code-block";
 
-export const Chat = () => {
+export const Chat = ({ api }: { api?: string }) => {
   const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "/api/ai",
+    api: api ?? "/api/ai",
     maxSteps: 3,
   });
 

@@ -1,0 +1,8 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { Chat } from "@/react/chat";
+---
+
+<BaseLayout>
+  <Chat client:load api={"/api/demo"} />
+</BaseLayout>
