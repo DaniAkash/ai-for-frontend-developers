@@ -68,8 +68,9 @@ export const NavBar = ({ activeUrl }: { activeUrl: string }) => {
               </div>
 
               <span className="font-light text-white">
-                visit <span className="font-semibold">daniakash.com</span> to
-                connect with me&nbsp;&nbsp;↗️
+                Let's connect on social media! visit{" "}
+                <span className="font-semibold">daniakash.com</span>
+                &nbsp;&nbsp;↗️
               </span>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <a
