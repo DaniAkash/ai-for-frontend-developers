@@ -13,6 +13,5 @@ export default defineConfig({
       applyBaseStyles: false,
     }),
   ],
-  // Disabled server to host slides - must be enabled when running the project
-  // output: "server",
+  output: "server",
 });

@@ -2,8 +2,6 @@
 
 This Astro project contains the source code and slides used in the talk "AI for Frontend Developers" at React Bangalore
 
-> While running locally, uncomment the `output: "server"` line in astro.config.mjs
-
 ## 🚀 Project Structure
 
 Inside of your Astro project, you'll see the following folders and files:
